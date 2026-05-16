@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сергей & Анастасия — свадебное приглашение</title>
+  <meta name="description" content="Свадебное приглашение Сергея и Анастасии — 1 августа 2026 года, Санкт-Петербург." />
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --paper: #fffaf2;
+      --paper-soft: #fbf5eb;
+      --text: #38352f;
+      --muted: #7b7469;
+      --line: rgba(56, 53, 47, 0.14);
+      --lilac: #c8b8e0;
+      --yellow: #fdffb8;
+      --mint: #c6eed6;
+      --beige: #EAD9C3;
+      --pink: #FADADD;
+      --gray: #ebecf0;
+      --accent: #8f7a5f;
+      --accent-dark: #5f4d38;
+      --shadow: 0 24px 70px rgba(83, 67, 49, 0.15);
+      --radius-large: 34px;
+      --radius-medium: 22px;
+      --radius-small: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(201, 182, 220, 0.55), transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(242, 215, 122, 0.45), transparent 26%),
+        linear-gradient(135deg, #f7f1e8 0%, #f2eadf 48%, #edf2eb 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      overflow: hidden;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 56px 0;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 420px;
+      height: 420px;
+      background: rgba(185, 216, 194, 0.45);
+      left: -140px;
+      bottom: 8%;
+    }
+
+    .hero::after {
+      width: 330px;
+      height: 330px;
+      background: rgba(232, 184, 190, 0.36);
+      right: -90px;
+      top: 12%;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius-large);
+      background: rgba(255, 250, 242, 0.76);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-content {
+      padding: clamp(28px, 5vw, 72px);
+      border-radius: 28px;
+      background:
+        linear-gradient(rgba(255, 250, 242, 0.86), rgba(255, 250, 242, 0.86)),
+        repeating-linear-gradient(90deg, rgba(143, 122, 95, 0.055) 0 1px, transparent 1px 18px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 28px;
+      color: var(--accent-dark);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      line-height: 1.08;
+    }
+
+    h1 {
+      max-width: 680px;
+      font-size: clamp(3.4rem, 8vw, 7.8rem);
+      letter-spacing: -0.08em;
+      color: #332f29;
+    }
+
+    .ampersand {
+      display: inline-block;
+      color: var(--accent);
+      font-style: italic;
+      transform: translateY(-0.04em);
+    }
+
+    .hero-subtitle {
+      max-width: 560px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+
+    .hero-date {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.48);
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 40px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-dark);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(83, 67, 49, 0.16);
+    }
+
+    .button.primary {
+      background: var(--accent-dark);
+      color: #fffaf2;
+    }
+
+    .button.secondary {
+      background: rgba(255, 250, 242, 0.5);
+      color: var(--accent-dark);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 600px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: url("images/hero_1.jpg") center center/cover;
+    }
+
+    section {
+      padding: clamp(58px, 9vw, 112px) 0;
+    }
+
+    .section-title {
+      max-width: 720px;
+      margin-bottom: 34px;
+    }
+
+    .section-title .kicker {
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      letter-spacing: -0.045em;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.8vw, 1.24rem);
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius-large);
+      background: rgba(255, 250, 242, 0.72);
+      box-shadow: 0 18px 48px rgba(83, 67, 49, 0.10);
+      backdrop-filter: blur(14px);
+    }
+
+    .intro-card {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      padding: clamp(22px, 4vw, 42px);
+    }
+
+    .intro-photo {
+      min-height: 330px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: rgba(255, 250, 242, 0.72);
+    }
+
+    .intro-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .intro-text {
+      align-self: center;
+      padding: clamp(8px, 3vw, 28px);
+    }
+
+    .intro-text p + p {
+      margin-top: 18px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .detail-card {
+      padding: 28px;
+      border-radius: var(--radius-medium);
+      background: rgba(255, 255, 255, 0.42);
+      border: 1px solid var(--line);
+    }
+
+    .detail-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.55rem;
+    }
+
+    .detail-card p {
+      color: var(--muted);
+    }
+
+    .map-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      bottom: 18px;
+      left: 72px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 22px;
+      align-items: start;
+      padding: 22px;
+      border-radius: var(--radius-medium);
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, 0.62);
+    }
+
+    .timeline-time {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 92px;
+      min-height: 44px;
+      border-radius: 999px;
+      background: var(--accent-dark);
+      color: #fffaf2;
+      font-weight: 800;
+    }
+
+    .timeline-text h3 {
+      margin-bottom: 5px;
+      font-size: 1.35rem;
+    }
+
+    .timeline-text p {
+      color: var(--muted);
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+      padding: clamp(24px, 4vw, 46px);
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(80px, 1fr));
+      gap: 14px;
+    }
+
+    .swatch {
+      min-height: 126px;
+      display: flex;
+      align-items: end;
+      padding: 14px;
+      border-radius: 22px;
+      color: rgba(56, 53, 47, 0.8);
+      font-size: 0.86rem;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(56, 53, 47, 0.08);
+    }
+
+    .swatch.lilac { background: var(--lilac); }
+    .swatch.yellow { background: var(--yellow); }
+    .swatch.mint { background: var(--mint); }
+    .swatch.beige { background: var(--beige); }
+    .swatch.pink { background: var(--pink); }
+    .swatch.gray { background: var(--gray); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 1fr;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .photo-card {
+      min-height: 310px;
+      position: relative;
+      border-radius: var(--radius-large);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      background: rgba(255, 250, 242, 0.72);
+    }
+
+    .photo-card img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-card:nth-child(2) {
+      align-self: start;
+      min-height: 0;
+      transform: translateY(42px);
+    }
+
+    .photo-card:nth-child(2) img {
+      position: relative;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .photo-card:nth-child(3) img {
+      object-position: center bottom;
+    }
+
+    .photo-card:nth-child(3) {
+      min-height: 390px;
+    }
+
+    .rsvp-card {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      padding: clamp(24px, 4vw, 46px);
+    }
+
+    .rsvp-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .fieldset {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .fieldset legend {
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.42);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .choice input {
+      width: auto;
+      margin-top: 0.28em;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      accent-color: var(--accent-dark);
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      padding: 14px 15px;
+      background: rgba(255, 255, 255, 0.58);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(95, 77, 56, 0.56);
+      box-shadow: 0 0 0 4px rgba(143, 122, 95, 0.12);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .rsvp-submit {
+      border: 0;
+      margin-top: 6px;
+    }
+
+    .form-status {
+      min-height: 1.4em;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    footer {
+      padding: 44px 0 60px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .hero-card,
+      .intro-card,
+      .palette,
+      .rsvp-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 420px;
+        order: -1;
+      }
+
+      .details-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-card:nth-child(2) {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .hero {
+        padding: 18px 0 42px;
+      }
+
+      .hero-card {
+        padding: 12px;
+        border-radius: 26px;
+      }
+
+      .hero-content,
+      .hero-visual {
+        border-radius: 22px;
+      }
+
+      .hero-visual {
+        min-height: 360px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 18vw, 4.8rem);
+      }
+
+      .timeline::before {
+        left: 42px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .timeline-time {
+        width: fit-content;
+        padding: 0 18px;
+      }
+
+      .swatches {
+        grid-template-columns: repeat(2, minmax(110px, 1fr));
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-content">
+            <div class="eyebrow">Wedding invitation</div>
+            <h1>Сергей <span class="ampersand">&</span> Анастасия</h1>
+            <p class="hero-subtitle">Мы будем счастливы разделить с вами день нашей свадьбы — тёплый праздник в кругу самых близких людей.</p>
+            <div class="hero-date">
+              <span class="pill">1 августа 2026</span>
+              <span class="pill">Санкт-Петербург</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="#rsvp">Подтвердить присутствие</a>
+              <a class="button secondary" href="#schedule">Посмотреть расписание</a>
+            </div>
+          </div>
+          <div class="hero-visual" role="img" aria-label="Сергей и Анастасия в зеркале"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="invitation">
+      <div class="container">
+        <div class="intro-card card">
+          <div class="intro-photo">
+            <img src="images/ilyichevo.jpg" alt="База отдыха Ильичёво" loading="lazy" />
+          </div>
+          <div class="intro-text">
+            <div class="section-title">
+              <div class="kicker">Дорогие гости</div>
+              <h2>Приглашаем вас на нашу свадьбу</h2>
+            </div>
+            <p class="lead">В этот день мы хотим быть рядом с родными и друзьями, разделить радость церемонии, дорогу за город и уютный вечер на базе отдыха «Ильичёво».</p>
+            <p>Пожалуйста, подтвердите своё присутствие заранее — так нам будет проще подготовить для вас место, трансфер и праздничный ужин.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="details">
+      <div class="container">
+        <div class="section-title">
+          <div class="kicker">Где и когда</div>
+          <h2>Главные детали дня</h2>
+        </div>
+        <div class="details-grid">
+          <article class="detail-card card">
+            <h3>Церемония</h3>
+            <p>Отдел ЗАГС Петроградского района</p>
+            <p>г. Санкт-Петербург, Большая Монетная ул., 17–19</p>
+            <p><strong>Сбор гостей:</strong> 14:20</p>
+            <p><strong>Церемония:</strong> 14:40</p>
+            <div class="map-links">
+              <a class="button secondary" href="https://yandex.ru/maps/-/CPGuVT0N" target="_blank" rel="noopener">Открыть карту</a>
+            </div>
+          </article>
+          <article class="detail-card card">
+            <h3>Банкет</h3>
+            <p>База отдыха «Ильичёво»</p>
+            <p>Ленинградская область, Выборгский район, посёлок Ильичёво</p>
+            <p><strong>Начало:</strong> 17:00</p>
+            <p><strong>Окончание:</strong> 22:00</p>
+            <div class="map-links">
+              <a class="button secondary" href="https://yandex.ru/maps/-/CPGuZ4nb" target="_blank" rel="noopener">Открыть карту</a>
+            </div>
+          </article>
+          <article class="detail-card card">
+            <h3>Трансфер</h3>
+            <p>После церемонии гости собираются у выхода из ЗАГСа, затем транспорт отправится на базу отдыха.</p>
+            <p>Вечером транспорт отвезёт гостей до станции метро «Беговая».</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="container">
+        <div class="section-title">
+          <div class="kicker">Расписание</div>
+          <h2>План свадебного дня</h2>
+        </div>
+        <div class="timeline card">
+          <div class="timeline-item">
+            <div class="timeline-time">14:20</div>
+            <div class="timeline-text">
+              <h3>Сбор гостей</h3>
+              <p>Встречаемся у входа в ЗАГС Петроградского района.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">14:40</div>
+            <div class="timeline-text">
+              <h3>Торжественная церемония</h3>
+              <p>Церемония бракосочетания Сергея и Анастасии.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">15:20</div>
+            <div class="timeline-text">
+              <h3>Сбор у выхода из ЗАГСа</h3>
+              <p>Гости собираются у выхода и проходят к транспорту.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">15:30</div>
+            <div class="timeline-text">
+              <h3>Отправление транспорта</h3>
+              <p>Едем на базу отдыха «Ильичёво».</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">17:00</div>
+            <div class="timeline-text">
+              <h3>Начало банкета</h3>
+              <p>Праздничный ужин, поздравления и тёплый вечер.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">22:00</div>
+            <div class="timeline-text">
+              <h3>Окончание банкета</h3>
+              <p>Завершение основной части праздника.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">22:30</div>
+            <div class="timeline-text">
+              <h3>Обратный трансфер</h3>
+              <p>Отправление транспорта до станции метро «Беговая».</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dresscode">
+      <div class="container">
+        <div class="palette card">
+          <div>
+            <div class="section-title">
+              <div class="kicker">Дресс-код</div>
+              <h2>Цветовая гамма праздника</h2>
+            </div>
+            <p class="lead">Мы будем рады, если вы поддержите цветовую гамму нашего праздника: лиловый, жёлтый, мятный, бежевый, розовый и светло-серый.</p>
+            <p class="note">Это не строгое правило, а мягкий ориентир для образов и настроения дня.</p>
+          </div>
+          <div class="swatches" aria-label="Палитра праздника">
+            <div class="swatch lilac">Лиловый</div>
+            <div class="swatch yellow">Жёлтый</div>
+            <div class="swatch mint">Мятный</div>
+            <div class="swatch beige">Бежевый</div>
+            <div class="swatch pink">Розовый</div>
+            <div class="swatch gray">Светло-серый</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="photos">
+      <div class="container">
+        <div class="section-title">
+          <div class="kicker">Фотографии</div>
+          <h2>Наши любимые кадры</h2>
+        </div>
+        <p class="lead">Небольшая галерея из путешествий и тёплых моментов, которые хочется сохранить рядом с приглашением.</p>
+        <div class="gallery-grid">
+          <figure class="photo-card">
+            <img src="images/20240614_215830.jpg" alt="Мы на пляжном закате" loading="lazy" />
+          </figure>
+          <figure class="photo-card">
+            <img src="images/20230919_123746.jpg" alt="А вот мы у горного озера" loading="lazy" />
+          </figure>
+          <figure class="photo-card">
+            <img src="images/photo_21_2026-04-24_14-16-17.jpg" alt="А тум мы у храма во Вьетнаме" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="rsvp">
+      <div class="container">
+        <div class="rsvp-card card">
+          <div>
+            <div class="section-title">
+              <h2>Подтвердите присутствие</h2>
+            </div>
+            <p class="lead">Пожалуйста, заполните короткую форму, чтобы мы знали, ждать ли вас на празднике и нужно ли учитывать вас в трансфере.</p>
+            <p class="note">Это поможет нам заранее подготовить рассадку, транспорт и праздничный ужин.</p>
+          </div>
+          <div class="rsvp-link-box">
+            <h3>Анкета для гостей</h3>
+            <p>Ответьте на несколько вопросов: сможете ли вы присутствовать, сколько вас будет и нужен ли трансфер.</p>
+            <form
+              class="rsvp-form"
+              id="weddingRsvpForm"
+              action="https://docs.google.com/forms/d/e/1FAIpQLSe2a4C0mzPMDP2Om2qPwti7zR3QeQXzfo_qtvDTcuG3vJGxSQ/formResponse"
+              method="POST"
+              target="googleFormTarget"
+            >
+              <input type="hidden" name="fvv" value="1" />
+              <input type="hidden" name="pageHistory" value="0" />
+
+              <label>
+                Ваши имена
+                <input type="text" name="entry.1498135098" autocomplete="name" required />
+              </label>
+
+              <fieldset class="fieldset">
+                <legend>Сможете ли вы присутствовать?</legend>
+                <div class="choice-list">
+                  <label class="choice">
+                    <input type="radio" name="entry.877086558" value="Да, с радостью будем" required />
+                    <span>Да, с радостью будем</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="entry.877086558" value="К сожалению, не получится" />
+                    <span>К сожалению, не получится</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label>
+                Сколько вас будет?
+                <input type="number" name="entry.1863762620" min="1" inputmode="numeric" required />
+              </label>
+
+              <fieldset class="fieldset">
+                <legend>Нужен ли трансфер?</legend>
+                <div class="choice-list">
+                  <label class="choice">
+                    <input type="checkbox" name="entry.2142031974" value="Да, от ЗАГСа до базы отдыха «Ильичёво»" />
+                    <span>Да, от ЗАГСа до базы отдыха «Ильичёво»</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="entry.2142031974" value="Да, обратно до метро «Беговая»" />
+                    <span>Да, обратно до метро «Беговая»</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="entry.2142031974" value="Нет, доберусь самостоятельно" />
+                    <span>Нет, доберусь самостоятельно</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label>
+                Есть ли особенности питания, аллергии или пожелания?
+                <textarea name="entry.1727700536"></textarea>
+              </label>
+
+              <fieldset class="fieldset">
+                <legend>Предпочтения по алкоголю</legend>
+                <div class="choice-list">
+                  <label class="choice">
+                    <input type="checkbox" name="entry.966178019" value="Вина, шампанское" />
+                    <span>Вина, шампанское</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="entry.966178019" value="Пиво, сидр" />
+                    <span>Пиво, сидр</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="entry.966178019" value="Без разницы" />
+                    <span>Без разницы</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label>
+                Комментарий или пожелание
+                <textarea name="entry.770897417"></textarea>
+              </label>
+
+              <button class="button primary rsvp-submit" type="submit">Отправить ответ</button>
+              <p class="form-status" id="rsvpStatus" role="status"></p>
+            </form>
+            <iframe name="googleFormTarget" title="Отправка формы" hidden></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>С любовью, Сергей и Анастасия · 1 августа 2026</p>
+    </div>
+  </footer>
+  <script>
+    const rsvpForm = document.getElementById("weddingRsvpForm");
+    const rsvpStatus = document.getElementById("rsvpStatus");
+
+    if (rsvpForm && rsvpStatus) {
+      rsvpForm.addEventListener("submit", () => {
+        rsvpStatus.textContent = "Отправляем ответ...";
+
+        window.setTimeout(() => {
+          rsvpStatus.textContent = "Спасибо! Ответ отправлен.";
+          rsvpForm.reset();
+        }, 900);
+      });
+    }
+  </script>
+</body>
+</html>
