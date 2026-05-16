@@ -38,6 +38,7 @@
     }
 
     body {
+      overflow-x: hidden;
       min-height: 100vh;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
@@ -147,7 +148,7 @@
     h1 {
       max-width: 680px;
       font-size: clamp(3.4rem, 8vw, 7.8rem);
-      letter-spacing: -0.08em;
+      letter-spacing: 0;
       color: #332f29;
     }
 
@@ -248,7 +249,7 @@
 
     h2 {
       font-size: clamp(2.2rem, 5vw, 4.5rem);
-      letter-spacing: -0.045em;
+      letter-spacing: 0;
     }
 
     .lead {
@@ -274,6 +275,7 @@
 
     .intro-photo {
       min-height: 330px;
+      aspect-ratio: 4 / 3;
       border-radius: 26px;
       overflow: hidden;
       background: rgba(255, 250, 242, 0.72);
@@ -421,6 +423,7 @@
 
     .photo-card {
       min-height: 310px;
+      aspect-ratio: 4 / 5;
       position: relative;
       border-radius: var(--radius-large);
       overflow: hidden;
@@ -439,6 +442,7 @@
 
     .photo-card:nth-child(2) {
       align-self: start;
+      aspect-ratio: auto;
       min-height: 0;
       transform: translateY(42px);
     }
@@ -551,6 +555,68 @@
       font-weight: 700;
     }
 
+    .form-status a {
+      color: var(--accent-dark);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .field-error {
+      display: none;
+      color: #9f3f36;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .field-error.is-visible {
+      display: block;
+    }
+
+    input.is-invalid,
+    textarea.is-invalid,
+    .choice-list.is-invalid .choice {
+      border-color: rgba(159, 63, 54, 0.72);
+      box-shadow: 0 0 0 4px rgba(159, 63, 54, 0.10);
+    }
+
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(56, 53, 47, 0.34);
+      backdrop-filter: blur(8px);
+    }
+
+    .dialog-backdrop[hidden] {
+      display: none;
+    }
+
+    .success-dialog {
+      width: min(100%, 430px);
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius-medium);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .success-dialog h3 {
+      margin-bottom: 10px;
+      font-size: 1.7rem;
+    }
+
+    .success-dialog p {
+      color: var(--muted);
+    }
+
+    .success-dialog .button {
+      width: 100%;
+      margin-top: 22px;
+    }
+
     .note {
       margin-top: 14px;
       color: var(--muted);
@@ -573,6 +639,7 @@
 
       .hero-visual {
         min-height: 420px;
+        aspect-ratio: 4 / 5;
         order: -1;
       }
 
@@ -581,58 +648,236 @@
         grid-template-columns: 1fr;
       }
 
+      .photo-card {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+      }
+
       .photo-card:nth-child(2) {
         transform: none;
+      }
+
+      .photo-card:nth-child(2) img {
+        width: 100%;
       }
     }
 
     @media (max-width: 640px) {
+      :root {
+        --radius-large: 24px;
+        --radius-medium: 18px;
+        --radius-small: 12px;
+      }
+
       .container {
-        width: min(100% - 24px, 1120px);
+        width: min(100% - 28px, 1120px);
       }
 
       .hero {
-        padding: 18px 0 42px;
+        min-height: auto;
+        padding: 14px 0 44px;
       }
 
       .hero-card {
-        padding: 12px;
-        border-radius: 26px;
+        gap: 14px;
+        padding: 10px;
+        border-radius: 24px;
+        box-shadow: 0 16px 48px rgba(83, 67, 49, 0.12);
+      }
+
+      .hero-content {
+        padding: 24px 18px 26px;
       }
 
       .hero-content,
       .hero-visual {
-        border-radius: 22px;
+        border-radius: 18px;
       }
 
       .hero-visual {
-        min-height: 360px;
+        min-height: 0;
+        aspect-ratio: 3 / 4;
+        background-position: center 54%;
+      }
+
+      .eyebrow {
+        margin-bottom: 18px;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
       }
 
       h1 {
-        font-size: clamp(3rem, 18vw, 4.8rem);
+        font-size: 3rem;
+        line-height: 1.02;
+      }
+
+      h2 {
+        font-size: 2.35rem;
+        line-height: 1.04;
+      }
+
+      h3 {
+        font-size: 1.35rem;
+      }
+
+      .hero-subtitle {
+        margin-top: 22px;
+        font-size: 1rem;
+      }
+
+      .hero-date,
+      .hero-actions {
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .pill {
+        width: 100%;
+        justify-content: center;
+        padding: 11px 14px;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+
+      .section-title {
+        margin-bottom: 24px;
+      }
+
+      .card,
+      .intro-card,
+      .palette,
+      .rsvp-card {
+        border-radius: 24px;
+      }
+
+      .intro-card,
+      .palette,
+      .rsvp-card {
+        gap: 20px;
+        padding: 18px;
+      }
+
+      .intro-photo {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+        border-radius: 18px;
+      }
+
+      .intro-text {
+        padding: 2px;
+      }
+
+      .details-grid {
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .detail-card {
+        padding: 20px;
+      }
+
+      .detail-card h3 {
+        font-size: 1.38rem;
+      }
+
+      .map-links {
+        margin-top: 14px;
+      }
+
+      .timeline {
+        gap: 12px;
+        margin-top: 24px;
+        border-radius: 24px;
       }
 
       .timeline::before {
-        left: 42px;
+        display: none;
       }
 
       .timeline-item {
         grid-template-columns: 1fr;
         gap: 14px;
+        padding: 18px;
       }
 
       .timeline-time {
         width: fit-content;
+        min-height: 40px;
         padding: 0 18px;
+      }
+
+      .swatch {
+        min-height: 104px;
+        border-radius: 16px;
       }
 
       .swatches {
         grid-template-columns: repeat(2, minmax(110px, 1fr));
+        gap: 10px;
+      }
+
+      .gallery-grid {
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .photo-card,
+      .photo-card:nth-child(3) {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+        border-radius: 20px;
+      }
+
+      .rsvp-link-box {
+        display: grid;
+        gap: 12px;
+      }
+
+      .rsvp-form {
+        gap: 14px;
+      }
+
+      .choice {
+        padding: 11px 12px;
+        font-size: 0.96rem;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 12px 13px;
       }
 
       .button {
         width: 100%;
+        min-height: 46px;
+        padding: 12px 16px;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .container {
+        width: min(100% - 20px, 1120px);
+      }
+
+      .hero-content {
+        padding: 22px 14px 24px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      h2 {
+        font-size: 2.05rem;
+      }
+
+      .swatches {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -834,19 +1079,15 @@
             <form
               class="rsvp-form"
               id="weddingRsvpForm"
-              action="https://docs.google.com/forms/d/e/1FAIpQLSe2a4C0mzPMDP2Om2qPwti7zR3QeQXzfo_qtvDTcuG3vJGxSQ/formResponse"
-              method="POST"
-              target="googleFormTarget"
+              novalidate
             >
-              <input type="hidden" name="fvv" value="1" />
-              <input type="hidden" name="pageHistory" value="0" />
-
               <label>
                 Ваши имена
-                <input type="text" name="entry.1498135098" autocomplete="name" required />
+                <input type="text" name="entry.1498135098" autocomplete="name" data-required-message="Укажите, пожалуйста, ваши имена." required />
+                <span class="field-error" data-error-for="entry.1498135098"></span>
               </label>
 
-              <fieldset class="fieldset">
+              <fieldset class="fieldset" data-choice-group="entry.877086558" data-required-message="Выберите, сможете ли вы присутствовать.">
                 <legend>Сможете ли вы присутствовать?</legend>
                 <div class="choice-list">
                   <label class="choice">
@@ -858,14 +1099,16 @@
                     <span>К сожалению, не получится</span>
                   </label>
                 </div>
+                <span class="field-error" data-error-for="entry.877086558"></span>
               </fieldset>
 
               <label>
                 Сколько вас будет?
-                <input type="number" name="entry.1863762620" min="1" inputmode="numeric" required />
+                <input type="number" name="entry.1863762620" min="1" inputmode="numeric" data-required-message="Укажите количество гостей." data-min-message="Количество гостей должно быть не меньше 1." required />
+                <span class="field-error" data-error-for="entry.1863762620"></span>
               </label>
 
-              <fieldset class="fieldset">
+              <fieldset class="fieldset" data-choice-group="entry.2142031974" data-required-message="Выберите, пожалуйста, вариант трансфера.">
                 <legend>Нужен ли трансфер?</legend>
                 <div class="choice-list">
                   <label class="choice">
@@ -877,10 +1120,11 @@
                     <span>Да, обратно до метро «Беговая»</span>
                   </label>
                   <label class="choice">
-                    <input type="checkbox" name="entry.2142031974" value="Нет, доберусь самостоятельно" />
-                    <span>Нет, доберусь самостоятельно</span>
+                    <input type="checkbox" name="entry.2142031974" value="Нет, везде двигаемся самостоятельно" />
+                    <span>Нет, везде двигаемся самостоятельно</span>
                   </label>
                 </div>
+                <span class="field-error" data-error-for="entry.2142031974"></span>
               </fieldset>
 
               <label>
@@ -888,7 +1132,7 @@
                 <textarea name="entry.1727700536"></textarea>
               </label>
 
-              <fieldset class="fieldset">
+              <fieldset class="fieldset" data-choice-group="entry.966178019" data-required-message="Выберите хотя бы один вариант по алкоголю.">
                 <legend>Предпочтения по алкоголю</legend>
                 <div class="choice-list">
                   <label class="choice">
@@ -904,6 +1148,7 @@
                     <span>Без разницы</span>
                   </label>
                 </div>
+                <span class="field-error" data-error-for="entry.966178019"></span>
               </fieldset>
 
               <label>
@@ -911,15 +1156,22 @@
                 <textarea name="entry.770897417"></textarea>
               </label>
 
-              <button class="button primary rsvp-submit" type="submit">Отправить ответ</button>
+              <button class="button primary rsvp-submit" type="submit">Открыть Google Form</button>
               <p class="form-status" id="rsvpStatus" role="status"></p>
             </form>
-            <iframe name="googleFormTarget" title="Отправка формы" hidden></iframe>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <div class="dialog-backdrop" id="successDialog" hidden>
+    <div class="success-dialog" role="dialog" aria-modal="true" aria-labelledby="successDialogTitle">
+      <h3 id="successDialogTitle">Форма открыта</h3>
+      <p>Мы открыли Google Form с вашими ответами. Пожалуйста, проверьте данные и нажмите “Отправить” на странице формы.</p>
+      <button class="button primary" type="button" id="successDialogClose">Хорошо</button>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
@@ -929,15 +1181,159 @@
   <script>
     const rsvpForm = document.getElementById("weddingRsvpForm");
     const rsvpStatus = document.getElementById("rsvpStatus");
+    const successDialog = document.getElementById("successDialog");
+    const successDialogClose = document.getElementById("successDialogClose");
+    const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe2a4C0mzPMDP2Om2qPwti7zR3QeQXzfo_qtvDTcuG3vJGxSQ/viewform";
+
+    const setFieldError = (name, message = "") => {
+      const error = rsvpForm.querySelector(`[data-error-for="${name}"]`);
+      const fields = rsvpForm.querySelectorAll(`[name="${name}"]`);
+      const group = rsvpForm.querySelector(`[data-choice-group="${name}"] .choice-list`);
+
+      if (error) {
+        error.textContent = message;
+        error.classList.toggle("is-visible", Boolean(message));
+      }
+
+      fields.forEach((field) => {
+        field.classList.toggle("is-invalid", Boolean(message));
+        field.toggleAttribute("aria-invalid", Boolean(message));
+      });
+
+      if (group) {
+        group.classList.toggle("is-invalid", Boolean(message));
+      }
+    };
+
+    const validateRsvpForm = () => {
+      const names = rsvpForm.elements["entry.1498135098"];
+      const guestsCount = rsvpForm.elements["entry.1863762620"];
+      const choiceGroups = rsvpForm.querySelectorAll("[data-choice-group]");
+      let firstInvalid = null;
+      let isValid = true;
+
+      setFieldError("entry.1498135098");
+      setFieldError("entry.1863762620");
+      choiceGroups.forEach((group) => setFieldError(group.dataset.choiceGroup));
+
+      if (!names.value.trim()) {
+        setFieldError("entry.1498135098", names.dataset.requiredMessage);
+        firstInvalid = firstInvalid || names;
+        isValid = false;
+      }
+
+      if (!guestsCount.value.trim()) {
+        setFieldError("entry.1863762620", guestsCount.dataset.requiredMessage);
+        firstInvalid = firstInvalid || guestsCount;
+        isValid = false;
+      } else if (Number(guestsCount.value) < 1) {
+        setFieldError("entry.1863762620", guestsCount.dataset.minMessage);
+        firstInvalid = firstInvalid || guestsCount;
+        isValid = false;
+      }
+
+      choiceGroups.forEach((group) => {
+        const name = group.dataset.choiceGroup;
+        const checked = rsvpForm.querySelector(`[name="${name}"]:checked`);
+
+        if (!checked) {
+          setFieldError(name, group.dataset.requiredMessage);
+          firstInvalid = firstInvalid || rsvpForm.querySelector(`[name="${name}"]`);
+          isValid = false;
+        }
+      });
+
+      if (!isValid && firstInvalid) {
+        firstInvalid.focus({ preventScroll: true });
+        firstInvalid.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+
+      return isValid;
+    };
+
+    const openSuccessDialog = () => {
+      if (!successDialog || !successDialogClose) return;
+
+      successDialog.hidden = false;
+      successDialogClose.focus();
+    };
+
+    const closeSuccessDialog = () => {
+      if (!successDialog || !successDialogClose) return;
+
+      successDialog.hidden = true;
+    };
+
+    const buildPrefilledGoogleFormUrl = () => {
+      const params = new URLSearchParams();
+
+      params.set("usp", "pp_url");
+
+      new FormData(rsvpForm).forEach((value, key) => {
+        const normalizedValue = String(value).trim();
+
+        if (normalizedValue) {
+          params.append(key, normalizedValue);
+        }
+      });
+
+      return `${googleFormUrl}?${params.toString()}`;
+    };
 
     if (rsvpForm && rsvpStatus) {
-      rsvpForm.addEventListener("submit", () => {
-        rsvpStatus.textContent = "Отправляем ответ...";
+      rsvpForm.addEventListener("input", (event) => {
+        const name = event.target.name;
 
-        window.setTimeout(() => {
-          rsvpStatus.textContent = "Спасибо! Ответ отправлен.";
+        if (name) {
+          setFieldError(name);
+        }
+      });
+
+      rsvpForm.addEventListener("change", (event) => {
+        const name = event.target.name;
+
+        if (name) {
+          setFieldError(name);
+        }
+      });
+
+      rsvpForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (!validateRsvpForm()) {
+          rsvpStatus.textContent = "Пожалуйста, заполните обязательные поля.";
+          return;
+        }
+
+        const submitButton = rsvpForm.querySelector(".rsvp-submit");
+        const prefilledUrl = buildPrefilledGoogleFormUrl();
+        const openedWindow = window.open(prefilledUrl, "_blank", "noopener");
+
+        if (openedWindow) {
+          rsvpStatus.textContent = "Google Form открыта в новой вкладке. Проверьте данные и нажмите «Отправить».";
           rsvpForm.reset();
-        }, 900);
+          openSuccessDialog();
+        } else {
+          rsvpStatus.innerHTML = `Браузер заблокировал новую вкладку. <a href="${prefilledUrl}" target="_blank" rel="noopener">Откройте Google Form вручную</a>.`;
+        }
+
+        submitButton.textContent = "Открыть Google Form";
+      });
+    }
+
+    if (successDialog && successDialogClose) {
+      successDialogClose.addEventListener("click", closeSuccessDialog);
+
+      successDialog.addEventListener("click", (event) => {
+        if (event.target === successDialog) {
+          closeSuccessDialog();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !successDialog.hidden) {
+          closeSuccessDialog();
+        }
       });
     }
   </script>
