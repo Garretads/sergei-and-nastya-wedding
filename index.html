@@ -330,20 +330,33 @@
     }
 
     .timeline {
+      --timeline-item-padding: 22px;
+      --timeline-time-height: 44px;
+      --timeline-line-x: calc(var(--timeline-item-padding) + 46px);
+      --timeline-gap: 16px;
+      --timeline-line-pill-gap: 8px;
       position: relative;
       display: grid;
-      gap: 16px;
+      gap: var(--timeline-gap);
       margin-top: 34px;
     }
 
     .timeline::before {
+      content: none;
+    }
+
+    .timeline-item:not(:last-child)::after {
       content: "";
       position: absolute;
-      top: 18px;
-      bottom: 18px;
-      left: 72px;
-      width: 1px;
-      background: var(--line);
+      top: calc(var(--timeline-item-padding) + var(--timeline-time-height) + var(--timeline-line-pill-gap));
+      bottom: calc(-1 * (var(--timeline-gap) + var(--timeline-item-padding) - var(--timeline-line-pill-gap)));
+      left: var(--timeline-line-x);
+      z-index: 2;
+      width: 2px;
+      border-radius: 999px;
+      background: rgba(95, 77, 56, 0.26);
+      box-shadow: 0 0 0 1px rgba(255, 250, 242, 0.42);
+      pointer-events: none;
     }
 
     .timeline-item {
@@ -352,7 +365,7 @@
       grid-template-columns: 120px 1fr;
       gap: 22px;
       align-items: start;
-      padding: 22px;
+      padding: var(--timeline-item-padding);
       border-radius: var(--radius-medium);
       border: 1px solid var(--line);
       background: rgba(255, 250, 242, 0.62);
@@ -360,7 +373,7 @@
 
     .timeline-time {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -792,19 +805,25 @@
       }
 
       .timeline {
-        gap: 12px;
+        --timeline-item-padding: 18px;
+        --timeline-time-height: 40px;
+        --timeline-gap: 12px;
         margin-top: 24px;
         border-radius: 24px;
       }
 
       .timeline::before {
-        display: none;
+        content: none;
+      }
+
+      .timeline-item::after {
+        content: none;
       }
 
       .timeline-item {
         grid-template-columns: 1fr;
         gap: 14px;
-        padding: 18px;
+        padding: var(--timeline-item-padding);
       }
 
       .timeline-time {
