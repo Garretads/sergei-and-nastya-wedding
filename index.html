@@ -561,6 +561,11 @@
       text-underline-offset: 3px;
     }
 
+    .form-status code {
+      font-size: 0.92em;
+      font-weight: 800;
+    }
+
     .field-error {
       display: none;
       color: #9f3f36;
@@ -1156,7 +1161,7 @@
                 <textarea name="entry.770897417"></textarea>
               </label>
 
-              <button class="button primary rsvp-submit" type="submit">Открыть Google Form</button>
+              <button class="button primary rsvp-submit" type="submit">Отправить ответ</button>
               <p class="form-status" id="rsvpStatus" role="status"></p>
             </form>
           </div>
@@ -1167,8 +1172,8 @@
 
   <div class="dialog-backdrop" id="successDialog" hidden>
     <div class="success-dialog" role="dialog" aria-modal="true" aria-labelledby="successDialogTitle">
-      <h3 id="successDialogTitle">Форма открыта</h3>
-      <p>Мы открыли Google Form с вашими ответами. Пожалуйста, проверьте данные и нажмите “Отправить” на странице формы.</p>
+      <h3 id="successDialogTitle">Спасибо, ответ отправлен</h3>
+      <p>Мы получили ваши данные и учтём их при подготовке праздника.</p>
       <button class="button primary" type="button" id="successDialogClose">Хорошо</button>
     </div>
   </div>
@@ -1183,7 +1188,7 @@
     const rsvpStatus = document.getElementById("rsvpStatus");
     const successDialog = document.getElementById("successDialog");
     const successDialogClose = document.getElementById("successDialogClose");
-    const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe2a4C0mzPMDP2Om2qPwti7zR3QeQXzfo_qtvDTcuG3vJGxSQ/viewform";
+    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbydeldkgBN--Cgkq1NCREMoAjrjH35SZq32cw1viEoRtYG6Pw5oKS6qczKXzt33M6k/exec";
 
     const setFieldError = (name, message = "") => {
       const error = rsvpForm.querySelector(`[data-error-for="${name}"]`);
@@ -1264,20 +1269,50 @@
       successDialog.hidden = true;
     };
 
-    const buildPrefilledGoogleFormUrl = () => {
-      const params = new URLSearchParams();
+    const setSubmitState = (isSubmitting) => {
+      const submitButton = rsvpForm.querySelector(".rsvp-submit");
 
-      params.set("usp", "pp_url");
+      submitButton.disabled = isSubmitting;
+      submitButton.textContent = isSubmitting ? "Отправляем..." : "Отправить ответ";
+    };
+
+    const submitToAppsScript = async () => {
+      if (!appsScriptUrl) {
+        rsvpStatus.innerHTML = "Отправка пока не настроена: вставьте URL Apps Script Web App в <code>appsScriptUrl</code>.";
+        return;
+      }
+
+      const payload = new URLSearchParams();
 
       new FormData(rsvpForm).forEach((value, key) => {
         const normalizedValue = String(value).trim();
 
-        if (normalizedValue) {
-          params.append(key, normalizedValue);
-        }
+        if (!normalizedValue) return;
+
+        payload.append(key, normalizedValue);
       });
 
-      return `${googleFormUrl}?${params.toString()}`;
+      payload.append("source", window.location.href);
+      payload.append("submittedAtClient", new Date().toISOString());
+
+      rsvpStatus.textContent = "Отправляем ответ...";
+      setSubmitState(true);
+
+      try {
+        await fetch(appsScriptUrl, {
+          method: "POST",
+          mode: "no-cors",
+          body: payload,
+        });
+
+        rsvpStatus.textContent = "Спасибо! Ответ отправлен.";
+        rsvpForm.reset();
+        openSuccessDialog();
+      } catch (error) {
+        rsvpStatus.textContent = "Не удалось отправить ответ. Проверьте подключение и попробуйте ещё раз.";
+      } finally {
+        setSubmitState(false);
+      }
     };
 
     if (rsvpForm && rsvpStatus) {
@@ -1305,19 +1340,7 @@
           return;
         }
 
-        const submitButton = rsvpForm.querySelector(".rsvp-submit");
-        const prefilledUrl = buildPrefilledGoogleFormUrl();
-        const openedWindow = window.open(prefilledUrl, "_blank", "noopener");
-
-        if (openedWindow) {
-          rsvpStatus.textContent = "Google Form открыта в новой вкладке. Проверьте данные и нажмите «Отправить».";
-          rsvpForm.reset();
-          openSuccessDialog();
-        } else {
-          rsvpStatus.innerHTML = `Браузер заблокировал новую вкладку. <a href="${prefilledUrl}" target="_blank" rel="noopener">Откройте Google Form вручную</a>.`;
-        }
-
-        submitButton.textContent = "Открыть Google Form";
+        submitToAppsScript();
       });
     }
 
