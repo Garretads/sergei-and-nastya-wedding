@@ -20,6 +20,7 @@ function doPost(e) {
     const sheet = getOrCreateSheet_();
     const values = e && e.parameter ? e.parameter : {};
     const listValues = e && e.parameters ? e.parameters : {};
+    const requestId = values.requestId || '';
 
     sheet.appendRow([
       new Date(),
@@ -33,10 +34,11 @@ function doPost(e) {
       values.submittedAtClient || '',
     ]);
 
-    return htmlResponse_('OK');
+    return htmlResponse_('OK', requestId);
   } catch (error) {
     console.error(error);
-    return htmlResponse_('ERROR');
+    const requestId = e && e.parameter && e.parameter.requestId ? e.parameter.requestId : '';
+    return htmlResponse_('ERROR', requestId);
   } finally {
     lock.releaseLock();
   }
@@ -63,8 +65,18 @@ function joinValues_(value) {
   return Array.isArray(value) ? value.join(', ') : String(value);
 }
 
-function htmlResponse_(status) {
+function htmlResponse_(status, requestId) {
+  const payload = JSON.stringify({
+    type: 'RSVP_SUBMIT_RESULT',
+    status: status,
+    requestId: requestId || '',
+  });
+
   return HtmlService
-    .createHtmlOutput(`<html><body>${status}</body></html>`)
+    .createHtmlOutput(
+      '<!doctype html><html><body><script>' +
+      'window.top && window.top.postMessage(' + payload + ', "*");' +
+      '</script></body></html>'
+    )
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

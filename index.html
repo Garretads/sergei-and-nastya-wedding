@@ -1212,6 +1212,7 @@
       <button class="button primary" type="button" id="successDialogClose">Хорошо</button>
     </div>
   </div>
+  <iframe name="rsvpSubmitFrame" id="rsvpSubmitFrame" title="RSVP submit frame" hidden></iframe>
 
   <footer>
     <div class="container">
@@ -1223,7 +1224,7 @@
     const rsvpStatus = document.getElementById("rsvpStatus");
     const successDialog = document.getElementById("successDialog");
     const successDialogClose = document.getElementById("successDialogClose");
-    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbydeldkgBN--Cgkq1NCREMoAjrjH35SZq32cw1viEoRtYG6Pw5oKS6qczKXzt33M6k/exec";
+    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzJ1ITWc0qK48z-rZCoAfRJg3dshi_8mf5r--wei08SVfsIgdVWkfF5VDdopIMhoZo2/exec";
 
     const setFieldError = (name, message = "") => {
       const error = rsvpForm.querySelector(`[data-error-for="${name}"]`);
@@ -1311,46 +1312,92 @@
       submitButton.textContent = isSubmitting ? "Отправляем..." : "Отправить ответ";
     };
 
-    const submitToAppsScript = async () => {
+    const pendingSubmission = {
+      requestId: "",
+      timeoutId: null,
+    };
+
+    const sanitizeResponseData = (data) => {
+      if (!data || typeof data !== "object") return null;
+      if (data.type !== "RSVP_SUBMIT_RESULT") return null;
+      return data;
+    };
+
+    const submitToAppsScript = () => {
       if (!appsScriptUrl) {
         rsvpStatus.innerHTML = "Отправка пока не настроена: вставьте URL Apps Script Web App в <code>appsScriptUrl</code>.";
         return;
       }
 
-      const payload = new URLSearchParams();
+      const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const ensureHiddenField = (name, value) => {
+        let input = rsvpForm.querySelector(`input[name="${name}"]`);
+        if (!input) {
+          input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          rsvpForm.appendChild(input);
+        }
+        input.value = value;
+      };
 
-      new FormData(rsvpForm).forEach((value, key) => {
-        const normalizedValue = String(value).trim();
+      ensureHiddenField("source", window.location.href);
+      ensureHiddenField("submittedAtClient", new Date().toISOString());
+      ensureHiddenField("requestId", requestId);
 
-        if (!normalizedValue) return;
+      rsvpForm.method = "POST";
+      rsvpForm.action = appsScriptUrl;
+      rsvpForm.target = "rsvpSubmitFrame";
+      rsvpForm.acceptCharset = "UTF-8";
 
-        payload.append(key, normalizedValue);
-      });
+      pendingSubmission.requestId = requestId;
+      if (pendingSubmission.timeoutId) {
+        clearTimeout(pendingSubmission.timeoutId);
+      }
 
-      payload.append("source", window.location.href);
-      payload.append("submittedAtClient", new Date().toISOString());
+      pendingSubmission.timeoutId = window.setTimeout(() => {
+        if (!pendingSubmission.requestId) return;
+        pendingSubmission.requestId = "";
+        setSubmitState(false);
+        rsvpStatus.textContent = "Не удалось подтвердить отправку. Проверьте подключение и попробуйте ещё раз.";
+      }, 20000);
 
       rsvpStatus.textContent = "Отправляем ответ...";
       setSubmitState(true);
-
-      try {
-        await fetch(appsScriptUrl, {
-          method: "POST",
-          mode: "no-cors",
-          body: payload,
-        });
-
-        rsvpStatus.textContent = "Спасибо! Ответ отправлен.";
-        rsvpForm.reset();
-        openSuccessDialog();
-      } catch (error) {
-        rsvpStatus.textContent = "Не удалось отправить ответ. Проверьте подключение и попробуйте ещё раз.";
-      } finally {
-        setSubmitState(false);
-      }
+      rsvpForm.submit();
     };
 
     if (rsvpForm && rsvpStatus) {
+      window.addEventListener("message", (event) => {
+        const isAllowedOrigin =
+          event.origin === "https://script.google.com" ||
+          event.origin.endsWith(".googleusercontent.com");
+
+        if (!isAllowedOrigin) return;
+
+        const payload = sanitizeResponseData(event.data);
+        if (!payload) return;
+        if (!pendingSubmission.requestId) return;
+        if (payload.requestId && payload.requestId !== pendingSubmission.requestId) return;
+
+        if (pendingSubmission.timeoutId) {
+          clearTimeout(pendingSubmission.timeoutId);
+          pendingSubmission.timeoutId = null;
+        }
+
+        const isSuccess = payload.status === "OK";
+        pendingSubmission.requestId = "";
+        setSubmitState(false);
+
+        if (isSuccess) {
+          rsvpStatus.textContent = "Спасибо! Ответ отправлен.";
+          rsvpForm.reset();
+          openSuccessDialog();
+        } else {
+          rsvpStatus.textContent = "Не удалось отправить ответ. Проверьте подключение и попробуйте ещё раз.";
+        }
+      });
+
       rsvpForm.addEventListener("input", (event) => {
         const name = event.target.name;
 
