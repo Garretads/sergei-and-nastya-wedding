@@ -8,7 +8,6 @@ const HEADERS = [
   'Нужен ли трансфер?',
   'Есть ли особенности питания, аллергии или пожелания?',
   'Предпочтения по алкоголю',
-  'Комментарий или пожелание',
   'Источник',
   'Время на устройстве гостя',
 ];
@@ -30,7 +29,6 @@ function doPost(e) {
       joinValues_(listValues['entry.2142031974']),
       values['entry.1727700536'] || '',
       joinValues_(listValues['entry.966178019']),
-      values['entry.770897417'] || '',
       values.source || '',
       values.submittedAtClient || '',
     ]);

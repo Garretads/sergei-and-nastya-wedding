@@ -192,6 +192,18 @@
       margin-top: 40px;
     }
 
+    .hero-rsvp-note {
+      margin-top: 26px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.5);
+      color: #4c4135;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1rem, 1.8vw, 1.14rem);
+      line-height: 1.5;
+    }
+
     .button {
       display: inline-flex;
       justify-content: center;
@@ -346,17 +358,7 @@
     }
 
     .timeline-item:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      top: calc(var(--timeline-item-padding) + var(--timeline-time-height) + var(--timeline-line-pill-gap));
-      bottom: calc(-1 * (var(--timeline-gap) + var(--timeline-item-padding) - var(--timeline-line-pill-gap)));
-      left: var(--timeline-line-x);
-      z-index: 2;
-      width: 2px;
-      border-radius: 999px;
-      background: rgba(95, 77, 56, 0.26);
-      box-shadow: 0 0 0 1px rgba(255, 250, 242, 0.42);
-      pointer-events: none;
+      content: none;
     }
 
     .timeline-item {
@@ -497,11 +499,13 @@
     .fieldset legend {
       color: var(--accent-dark);
       font-weight: 800;
+      margin-bottom: 2px;
     }
 
     .choice-list {
       display: grid;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 2px;
     }
 
     .choice {
@@ -749,6 +753,12 @@
         margin-top: 24px;
       }
 
+      .hero-rsvp-note {
+        margin-top: 18px;
+        padding: 12px 14px;
+        font-size: 0.98rem;
+      }
+
       .pill {
         width: 100%;
         justify-content: center;
@@ -919,6 +929,7 @@
               <span class="pill">1 августа 2026</span>
               <span class="pill">Санкт-Петербург</span>
             </div>
+            <p class="hero-rsvp-note">Пожалуйста, подтвердите своё присутствие заранее — так нам будет проще подготовить для вас место, трансфер и праздничный ужин.</p>
             <div class="hero-actions">
               <a class="button primary" href="#rsvp">Подтвердить присутствие</a>
               <a class="button secondary" href="#schedule">Посмотреть расписание</a>
@@ -940,12 +951,11 @@
               <div class="kicker">Дорогие гости</div>
               <h2>Приглашаем вас на нашу свадьбу</h2>
             </div>
-            <p class="lead">В этот день мы хотим быть рядом с родными и друзьями, разделить радость церемонии, дорогу за город и уютный вечер на базе отдыха «Ильичёво».</p>
-            <p>Пожалуйста, подтвердите своё присутствие заранее — так нам будет проще подготовить для вас место, трансфер и праздничный ужин.</p>
+            <p class="lead">Хотим разделить с вами - самыми дорогими и близкими людьми -  радость торжественной церемонии в ЗАГСе, тепло праздничного ужина в уютном загородном ресторане и всю ту невероятную гамму эмоций, которую нам предстоит пережить в этот день</p>
           </div>
         </div>
       </div>
-    </section>
+    </section> 
 
     <section id="details">
       <div class="container">
@@ -976,8 +986,8 @@
           </article>
           <article class="detail-card card">
             <h3>Трансфер</h3>
-            <p>После церемонии гости собираются у выхода из ЗАГСа, затем транспорт отправится на базу отдыха.</p>
-            <p>Вечером транспорт отвезёт гостей до станции метро «Беговая».</p>
+            <p>Не беспокойтесь о том, как добраться до банкета! После церемонии к <strong>ЗАГСу</strong> будет подан <strong>комфортабельный автобус</strong>, который доставит вас прямо к месту празднования.</p>
+            <p>После окончания торжества этот же автобус отвезёт гостей в город до станции метро <strong>«Беговая»</strong>.</p>
           </article>
         </div>
       </div>
@@ -994,49 +1004,56 @@
             <div class="timeline-time">14:20</div>
             <div class="timeline-text">
               <h3>Сбор гостей</h3>
-              <p>Встречаемся у входа в ЗАГС Петроградского района.</p>
+              <p>Встречаемся у входа в ЗАГС Петроградского района. Не опаздывать!</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-time">14:40</div>
             <div class="timeline-text">
               <h3>Торжественная церемония</h3>
-              <p>Церемония бракосочетания Сергея и Анастасии.</p>
+              <p>Церемония бракосочетания Сергея и Анастасии. Готовим платочки.</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-time">15:20</div>
             <div class="timeline-text">
               <h3>Сбор у выхода из ЗАГСа</h3>
-              <p>Гости собираются у выхода и проходят к транспорту.</p>
+              <p>Гости собираются у выхода и проходят к автобусу. Не разбегаемся — по шампусику и в путь!</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-time">15:30</div>
             <div class="timeline-text">
-              <h3>Отправление транспорта</h3>
-              <p>Едем на базу отдыха «Ильичёво».</p>
+              <h3>Отправление автобуса</h3>
+              <p>Едем на базу отдыха «Ильичёво». По пожеланию заводим песню!</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-time">17:00</div>
             <div class="timeline-text">
-              <h3>Начало банкета</h3>
-              <p>Праздничный ужин, поздравления и тёплый вечер.</p>
+              <h3>Welcome</h3>
+              <p>Приветственный фуршет, знакомство с ведущим и первые сюрпризы для вас.</p>
             </div>
           </div>
           <div class="timeline-item">
-            <div class="timeline-time">22:00</div>
+            <div class="timeline-time">17:30</div>
             <div class="timeline-text">
-              <h3>Окончание банкета</h3>
-              <p>Завершение основной части праздника.</p>
+              <h3>Начало банкета</h3>
+              <p>Праздничный ужин, поздравления, танцы и много обнимашек.</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-time">22:30</div>
             <div class="timeline-text">
+              <h3>Окончание банкета</h3>
+              <p>Завершение основной части праздника. (Всё хорошее когда-нибудь заканчивается...)</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">23:00</div>
+            <div class="timeline-text">
               <h3>Обратный трансфер</h3>
-              <p>Отправление транспорта до станции метро «Беговая».</p>
+              <p>Отправление автобуса до станции метро «Беговая». А вот здесь уже точно нужно петь!</p>
             </div>
           </div>
         </div>
@@ -1051,8 +1068,8 @@
               <div class="kicker">Дресс-код</div>
               <h2>Цветовая гамма праздника</h2>
             </div>
-            <p class="lead">Мы будем рады, если вы поддержите цветовую гамму нашего праздника: лиловый, жёлтый, мятный, бежевый, розовый и светло-серый.</p>
-            <p class="note">Это не строгое правило, а мягкий ориентир для образов и настроения дня.</p>
+            <p class="lead">Мы будем рады, если вы поддержите цветовую гамму нашего праздника.</p>
+            <p class="note">Это ни в комем случае не строгое правило, а лишь мягкий ориентир для СОЗДАНИЯ образов и настроения дня.</p>
           </div>
           <div class="swatches" aria-label="Палитра праздника">
             <div class="swatch lilac">Лиловый</div>
@@ -1128,7 +1145,7 @@
 
               <label>
                 Сколько вас будет?
-                <input type="number" name="entry.1863762620" min="1" inputmode="numeric" data-required-message="Укажите количество гостей." data-min-message="Количество гостей должно быть не меньше 1." required />
+                <input type="number" name="entry.1863762620" min="1" step="1" inputmode="numeric" data-required-message="Укажите количество гостей." data-min-message="Количество гостей должно быть не меньше 1." required />
                 <span class="field-error" data-error-for="entry.1863762620"></span>
               </label>
 
@@ -1152,12 +1169,12 @@
               </fieldset>
 
               <label>
-                Есть ли особенности питания, аллергии или пожелания?
+                Есть ли у вас ограничения в питании или пищевые аллергии?
                 <textarea name="entry.1727700536"></textarea>
               </label>
 
               <fieldset class="fieldset" data-choice-group="entry.966178019" data-required-message="Выберите хотя бы один вариант по алкоголю.">
-                <legend>Предпочтения по алкоголю</legend>
+                <legend>Предпочтения по напиткам</legend>
                 <div class="choice-list">
                   <label class="choice">
                     <input type="checkbox" name="entry.966178019" value="Вина, шампанское" />
@@ -1168,17 +1185,16 @@
                     <span>Пиво, сидр</span>
                   </label>
                   <label class="choice">
-                    <input type="checkbox" name="entry.966178019" value="Без разницы" />
-                    <span>Без разницы</span>
+                    <input type="checkbox" name="entry.966178019" value="Что-нибудь покрепче!" />
+                    <span>Что-нибудь покрепче!</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="entry.966178019" value="Безалкогольные напитки" />
+                    <span>Безалкогольные напитки</span>
                   </label>
                 </div>
                 <span class="field-error" data-error-for="entry.966178019"></span>
               </fieldset>
-
-              <label>
-                Комментарий или пожелание
-                <textarea name="entry.770897417"></textarea>
-              </label>
 
               <button class="button primary rsvp-submit" type="submit">Отправить ответ</button>
               <p class="form-status" id="rsvpStatus" role="status"></p>
