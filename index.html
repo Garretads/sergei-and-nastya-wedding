@@ -1224,7 +1224,7 @@
     const rsvpStatus = document.getElementById("rsvpStatus");
     const successDialog = document.getElementById("successDialog");
     const successDialogClose = document.getElementById("successDialogClose");
-    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzJ1ITWc0qK48z-rZCoAfRJg3dshi_8mf5r--wei08SVfsIgdVWkfF5VDdopIMhoZo2/exec";
+    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbwn_LzTEs4HRtQqa2L9W3jl1x4aAV4nEYCRmdnf6P2O3--Hr8GHlmlgzg-tHFsXfmNv/exec";
 
     const setFieldError = (name, message = "") => {
       const error = rsvpForm.querySelector(`[data-error-for="${name}"]`);
@@ -1341,7 +1341,7 @@
         input.value = value;
       };
 
-      ensureHiddenField("source", window.location.href);
+      ensureHiddenField("userAgent", navigator.userAgent || "");
       ensureHiddenField("submittedAtClient", new Date().toISOString());
       ensureHiddenField("requestId", requestId);
 
